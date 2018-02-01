@@ -1,4 +1,4 @@
-FROM microsoft/vsts-agent:ubuntu-16.04-standard
+FROM microsoft/ubuntu-16.04-tfs-2018-docker-17.06.0-ce
 
 # Following current install guide from
 # http://www.mono-project.com/download/#download-lin on 2017-12-08
@@ -16,17 +16,3 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
     apt-get  -y --no-install-recommends install libcurl3 tzdata unzip curl git-all mono-complete &&\
     apt-get -yqq clean &&\
     rm -rf /var/lib/apt/lists/* /tmp/*
-
-RUN set -x \
- && curl -fSL https://github.com/Microsoft/vsts-agent/releases/download/v2.122.1/vsts-agent-ubuntu.16.04-x64-2.122.1.tar.gz -o agent.tgz \
- && mkdir agent \
- && cd agent \
- && tar -xzf ../agent.tgz \
- && chown -R root:root . \
- && cd .. \
- && rm agent.tgz
-
-COPY ./start.sh .
-RUN chmod +x start.sh
-
-CMD ["./start.sh"]
